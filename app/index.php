@@ -1,2 +1,11 @@
 <?php
-echo "coucou";
+
+include_once 'config/Database.php';
+include_once 'models/Lead.php';
+
+$database = new Database();
+$db = $database->getConnection();
+
+$lead = new Lead($db);
+
+$stmt = $lead->read();

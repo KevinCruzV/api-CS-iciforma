@@ -8,7 +8,7 @@ class Database
     /**
      * @var string $host
      */
-    private $host = "localhost";
+    private $host = "db";
     /**
      * @var string $db_name
      */
@@ -37,7 +37,7 @@ class Database
 
         try
         {
-            $this->connexion = new PDO("mysql:host=" . $this->host . "; dbname=" . $this->db_name, $this->username, $this->password);
+            $this->connexion = new PDO("mysql:host=" . $this->host . ";dbname=" . $this->db_name, $this->username, $this->password);
             $this->connexion->exec("set names utf8");
         }catch(PDOException $exception)
         {
