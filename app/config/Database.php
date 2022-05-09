@@ -12,7 +12,7 @@ class Database
     /**
      * @var string $db_name
      */
-    private $db_name = "api_iciF_cs";
+    private $db_name = "data";
     /**
      * @var string $username
      */
@@ -26,7 +26,11 @@ class Database
      */
     public $connexion;
 
-    public function getConnexion()
+    /**
+     * @return PDO|null
+     * connexion function
+     */
+    public function getConnection()
     {
 
         $this->connexion = null;
@@ -37,8 +41,10 @@ class Database
             $this->connexion->exec("set names utf8");
         }catch(PDOException $exception)
         {
-        //
+            echo "Connexion error : " . $exception->getMessage();
         }
+
+        return $this->connexion;
 
     }
 
