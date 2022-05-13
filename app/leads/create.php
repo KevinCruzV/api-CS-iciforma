@@ -47,8 +47,8 @@ if($_SERVER['REQUEST_METHOD'] == 'POST')
          * statut verification
          * horaire_rappel verification
          */
-//        if(verifCivilite($datas->civilite) && verifStatut($datas->statut) && verifHoraire($datas->horaire_rappel))
-//        {
+        if(verifCivilite($datas->civilite) && verifStatut($datas->statut) && verifHoraire($datas->horaire_rappel))
+        {
 
             $lead->civilite = $datas->civilite;
             $lead->nom = $datas->nom;
@@ -62,7 +62,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST')
             $lead->formation_ou_client = $datas->formation_ou_client;
             $lead->id_client = $datas->id_client;
 
-            if($lead->create())
+            if($lead->create() == true)
             {
                 /**
                  * sucess request
@@ -82,16 +82,17 @@ if($_SERVER['REQUEST_METHOD'] == 'POST')
                     "message" => "Service unavailable"
                 ]);
             }
-//        }else
-//        {
-//            http_response_code(400);
-//            echo json_encode([
-//                "message" => "Bad request - Bad data format. See also civilite or statut or horaire_rappel"
-//            ]);
-//        }
+        }else
+        {
+            http_response_code(400);
+            echo json_encode([
+                "message" => "Bad request - Bad data format. See also civilite or statut or horaire_rappel"
+            ]);
+        }
 
     } else
     {
+
         /**
          * Request error
          */
