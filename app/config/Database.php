@@ -1,26 +1,17 @@
 <?php
 
 /**
+ * Env var
+ */
+require_once "../vendor/autoload.php";
+require_once 'env.php';
+
+/**
  * Class for the connexion to the database
  */
 class Database
 {
-    /**
-     * @var string $host
-     */
-    private $host = "db";
-    /**
-     * @var string $db_name
-     */
-    private $db_name = "data";
-    /**
-     * @var string $username
-     */
-    private $username = "root";
-    /**
-     * @var string $password
-     */
-    private $password = "password";
+
     /**
      * @var $connexion
      */
@@ -30,14 +21,14 @@ class Database
      * @return PDO|null
      * connexion function
      */
-    public function getConnection()
+    public function getConnection(): ?PDO
     {
 
         $this->connexion = null;
 
         try
         {
-            $this->connexion = new PDO("mysql:host=" . $this->host . ";dbname=" . $this->db_name, $this->username, $this->password);
+            $this->connexion = new PDO("mysql:host=" . $_ENV["DB_HOST"] . ";dbname=" . $_ENV["DB_DATABASE"], $_ENV["DB_USERNAME"], $_ENV["DB_PASSWORD"]);
             $this->connexion->exec("set names utf8");
         }catch(PDOException $exception)
         {
