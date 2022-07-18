@@ -1,6 +1,8 @@
 {
     "require": {
         "vlucas/phpdotenv": "^5.4",
-        "ext-pdo": "*"
+        "ext-pdo": "*",
+        "google/apiclient": "^2.12",
+        "hybridauth/hybridauth": "^3.8"
     }
 }

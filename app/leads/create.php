@@ -11,8 +11,10 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
 /**
  * Env var
  */
-require_once "../vendor/autoload.php";
+//require_once "../vendor/autoload.php";
 require_once '../config/env.php';
+include_once '../hook/function.php';
+
 
 
 /**
@@ -28,13 +30,12 @@ if($_SERVER['REQUEST_METHOD'] == 'POST')
             "message" => "No Api Key"
         ]);
 
-    }elseif($_SERVER['HTTP_X_API_KEY'] == $_ENV["API_KEY"])
+    }elseif($_SERVER['HTTP_X_API_KEY'] == '4d96e221-3eb6-4db2-a216-a04a58ccacdf')
     {
         /**
          *  config files & access
          */
-        include_once '../config/Database.php';
-        include_once '../hook/function.php';
+        include_once '../Database.php';
         include_once '../models/Lead.php';
 
         /**
@@ -64,69 +65,66 @@ if($_SERVER['REQUEST_METHOD'] == 'POST')
              * statut verification
              * horaire_rappel verification
              */
-            if(verifCivilite($datas->civilite) && verifStatut($datas->statut) && verifHoraire($datas->horaire_rappel))
+
+
+
+            $lead->civilite = $datas->civilite;
+            $lead->nom = $datas->nom;
+            $lead->prenom = $datas->prenom;
+            $lead->tel = $datas->tel;
+            $lead->email = $datas->email;
+            $lead->ville = $datas->ville;
+            $lead->code_postal = $datas->code_postal;
+            $lead->statut = $datas->statut;
+            $lead->horaire_rappel = $datas->horaire_rappel;
+            $lead->formation_ou_client = $datas->formation_ou_client;
+            $lead->id_client = $datas->id_client;
+
+            if($lead->create() == true)
             {
 
-                $lead->civilite = $datas->civilite;
-                $lead->nom = $datas->nom;
-                $lead->prenom = $datas->prenom;
-                $lead->tel = $datas->tel;
-                $lead->email = $datas->email;
-                $lead->ville = $datas->ville;
-                $lead->code_postal = $datas->code_postal;
-                $lead->statut = $datas->statut;
-                $lead->horaire_rappel = $datas->horaire_rappel;
-                $lead->formation_ou_client = $datas->formation_ou_client;
-                $lead->id_client = $datas->id_client;
+                /**
+                 * sucess request
+                 */
+                http_response_code(200);
+                echo json_encode([
+                   "message" => "lead created"
+                ]);
+                //append_to_sheet('1qKqd0shLWiyBGXOoQlXys5J8hx9CbHNxuezlbTWPBt8',$lead->civilite,$lead->nom,$lead->prenom,$lead->tel,$lead->email,$lead->ville,$lead->code_postal,$lead->statut,$lead->horaire_rappel,$lead->formation_ou_client,$lead->id_client);
 
-                if($lead->create() == true)
-                {
-                    /**
-                     * sucess request
-                     */
-                    http_response_code(200);
-                    echo json_encode([
-                       "message" => "lead ajouté"
-                    ]);
-
-                }else
-                {
-                    /**
-                     * not a sucess request
-                     */
-                    http_response_code(503);
-                    echo json_encode([
-                        "message" => "Service unavailable"
-                    ]);
-                }
             }else
             {
-                http_response_code(400);
+                /**
+                 * not a sucess request
+                 */
+                http_response_code(503);
                 echo json_encode([
-                    "message" => "Bad request - Bad data format. See also civilite or statut or horaire_rappel"
+                    "message" => "Service unavailable"
                 ]);
             }
 
-        }else
-        {
-            header("WWW-Authenticate: X-ApiKey realm=\"Private\"");
-            header("HTTP/1.0 401 Unauthorized");
+
+        }else{
+
+            /**
+             * Request error
+             */
+            http_response_code(400);
             echo json_encode([
-                "message" => "Wrong Key"
+                "message" => "Body empty"
             ]);
+    
         }
+
     } else
     {
-
-        /**
-         * Request error
-         */
-        http_response_code(400);
+        header("WWW-Authenticate: X-ApiKey realm=\"Private\"");
+        header("HTTP/1.0 401 Unauthorized");
         echo json_encode([
-            "message" => "Body empty"
+            "message" => "Wrong Key"
         ]);
-
     }
+
 
 }else
 {
