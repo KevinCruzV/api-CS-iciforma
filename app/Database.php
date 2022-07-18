@@ -36,7 +36,7 @@ class Database
         try
         {
 
-            $this->connexion = new PDO('mysql:host=db;dbname=data', 'root', 'password');
+            $this->connexion = new PDO('mysql:host=pagesap2323.mysql.db;dbname=pagesap2323', 'pagesap2323', 'SOIJSD2239023dfds');
             $this->connexion->exec("set names utf8");
         }catch(PDOException $exception)
         {
