@@ -12,7 +12,7 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
  * Env var
  */
 //require_once "../vendor/autoload.php";
-require_once '../config/env.php';
+//require_once '../config/env.php';
 include_once '../hook/function.php';
 
 
