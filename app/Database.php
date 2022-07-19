@@ -3,8 +3,10 @@
 /**
  * Env var
  */
-require_once "../vendor/autoload.php";
-require_once 'env.php';
+//require 'vendor/autoload.php';
+
+
+
 
 /**
  * Class for the connexion to the database
@@ -15,7 +17,9 @@ class Database
     /**
      * @var $connexion
      */
-    public $connexion;
+
+
+    public mixed $connexion;
 
     /**
      * @return PDO|null
@@ -28,7 +32,8 @@ class Database
 
         try
         {
-            $this->connexion = new PDO("mysql:host=" . $_ENV["DB_HOST"] . ";dbname=" . $_ENV["DB_DATABASE"], $_ENV["DB_USERNAME"], $_ENV["DB_PASSWORD"]);
+
+            $this->connexion = new PDO('mysql:host=db;dbname=data', 'root', 'password');
             $this->connexion->exec("set names utf8");
         }catch(PDOException $exception)
         {
