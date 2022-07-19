@@ -30,14 +30,14 @@ if($_SERVER['REQUEST_METHOD'] == 'GET')
             "message" => "No Api Key"
         ]);
 
-    }elseif($_SERVER['HTTP_X_API_KEY'] == '4d96e221-3eb6-4db2-a216-a04a58ccacdf')
+    }elseif($_SERVER['HTTP_X_API_KEY'] == $_ENV["API_KEY"])
     {
 
 
         /**
          *  config files & access
          */
-        include_once '../Database.php';
+        include_once '../config/Database.php';
         include_once '../models/Lead.php';
 
         /**

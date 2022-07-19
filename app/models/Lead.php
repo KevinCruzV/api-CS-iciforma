@@ -1,38 +1,38 @@
 <?php
 class Lead {
     /**
-     *  $connexion
-     * Connexion db
+     * @var $connexion
+     * connexion db
      */
-    private mixed $connexion;
+    private $connexion;
     /**
      * @var string $table
      * Db table
      */
-    private string $table = "lead";
+    private $table = "lead";
 
 
     /**
      * object properties
      */
 
-    public int $id;
-    public string $civilite;
-    public string $nom;
-    public string $prenom;
-    public string $tel;
-    public string $email;
-    public string $ville;
-    public string $code_postal;
-    public string $statut;
-    public string $horaire_rappel;
-    public string $formation_ou_client;
-    public string $id_client;
-    public string $created_at;
-    public string $update_at;
+    public $id;
+    public $civilite;
+    public $nom;
+    public $prenom;
+    public $tel;
+    public $email;
+    public $ville;
+    public $code_postal;
+    public $statut;
+    public $horaire_rappel;
+    public $formation_ou_client;
+    public $id_client;
+    public $created_at;
+    public $update_at;
 
     /**
-     * @param $db
+     * @param $connexion
      */
     public function __construct($db)
     {
@@ -43,7 +43,7 @@ class Lead {
      * @return mixed
      * read leads
      */
-    public function read(): mixed
+    public function read()
     {
         $sql = "SELECT * FROM " . $this->table . " ORDER BY created_at DESC";
 
@@ -55,10 +55,10 @@ class Lead {
     }
 
     /**
-     * @return PDOStatement|bool
+     * @return mixed
      * read one lead
      */
-    public function read_one(): PDOStatement|bool
+    public function read_one()
     {
         $sql = "SELECT * FROM " . $this->table . " ORDER BY created_at DESC WHERE id_client = ? LIMIT 0,1";
 
@@ -72,10 +72,10 @@ class Lead {
     }
 
     /**
-     * @return bool
+     * @return void
      * create a lead
      */
-    public function create(): bool
+    public function create()
     {
         $sql = "INSERT INTO " . $this->table . " SET civilite=:civilite, nom=:nom, prenom=:prenom, tel=:tel, email=:email, ville=:ville,
         code_postal=:code_postal, statut=:statut, horaire_rappel=:horaire_rappel, formation_ou_client=:formation_ou_client, id_client=:id_client";

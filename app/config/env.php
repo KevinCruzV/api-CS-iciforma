@@ -3,12 +3,11 @@
 /**
  * Environement variable
  */
+use Dotenv\Dotenv;
 
-require '../vendor/autoload.php';
+$dotenv = Dotenv::createImmutable(dirname(__DIR__));
 
-$dotenv = \Dotenv\Dotenv::createImmutable(__DIR__.'/../','.env');
 $dotenv->load();
-
 
 
 
